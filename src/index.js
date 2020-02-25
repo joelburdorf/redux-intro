@@ -2,14 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './Components/App/App';
 import * as serviceWorker from './serviceWorker';
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux'
 
-const storeInstance = createStore(
-    () => {
-        console.log("Hello, I'm a reducer");
-        
+
+const firstReducer = (state, action) => {
+    if(action.type === 'BUTTON_ONE'){
+        console.log("Hello, I'm a reducer", action.type);
     }
+    return {};
+}
+
+const secondReducer = (state, action) => {
+    if (action.type === 'BUTTON_TWO') {
+        console.log("Hello, I'm also a reducer", action.type);
+    }
+    return {};
+}
+
+const storeInstance = createStore (
+    combineReducers({
+        firstReducer,
+        secondReducer
+    })    
 )
 
 ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
